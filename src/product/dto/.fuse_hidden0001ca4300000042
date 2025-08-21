@@ -1,0 +1,28 @@
+import { IsInt, IsNotEmpty, IsString } from "class-validator";
+
+export class CreateProductDto {
+	@IsNotEmpty()
+	@IsString()
+	name: string;
+
+	@IsNotEmpty()
+	category_id: number;
+
+  @IsNotEmpty()
+  @IsInt()
+  price:number
+
+  @IsInt()
+  stock:number
+
+	@IsNotEmpty()
+	@IsString()
+  description:string
+}
+
+
+	name: varchar({ length: 255 }).notNull(),
+	category_id: integer().notNull(),
+	price: integer().notNull(),
+	stock: integer().default(0).notNull(),
+	description: varchar({ length: 255 }).notNull(),
