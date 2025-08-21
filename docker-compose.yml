@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_ecommerce-nest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres-ecommerce-nest:/var/lib/postgresql/data
+    ports:
+      - 5433:5432
+    restart: unless-stopped
+
+  adminer:
+    image: adminer
+    container_name: adminer_ecommerce-nest
+    restart: unless-stopped
+    ports:
+      - 4001:8080
+
+volumes:
+  postgres-ecommerce-nest:
