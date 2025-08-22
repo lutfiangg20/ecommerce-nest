@@ -6,9 +6,14 @@ import { Pool } from "pg";
 @Injectable()
 export class DatabaseService {
 	public db: ReturnType<typeof drizzle>;
+	private pool: Pool;
 
 	constructor() {
-		const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
-		this.db = drizzle(pool);
+		this.pool = new Pool({ connectionString: process.env.DATABASE_URL! });
+		this.db = drizzle(this.pool);
+	}
+
+	async onModuleDestroy() {
+		await this.pool.end();
 	}
 }
