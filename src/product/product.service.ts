@@ -15,6 +15,9 @@ export class ProductService {
 				id: productsTable.id,
 				name: productsTable.name,
 				category: categoriesTable.name,
+				price: productsTable.price,
+				stock: productsTable.stock,
+				description: productsTable.description,
 			})
 			.from(productsTable)
 			.innerJoin(
@@ -29,6 +32,7 @@ export class ProductService {
 	}
 
 	async update(product: UpdateProductDto, id: number) {
+		console.log("product update", product);
 		return await this.db.db
 			.update(productsTable)
 			.set(product)

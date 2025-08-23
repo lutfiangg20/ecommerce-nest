@@ -4,6 +4,7 @@ import { AuthService } from "./auth.service";
 import { JwtModule } from "@nestjs/jwt";
 import { UserModule } from "src/user/user.module";
 import { AuthController } from "./auth.controller";
+import { AuthRepository } from "./auth.repostory";
 
 @Module({
 	imports: [
@@ -14,7 +15,7 @@ import { AuthController } from "./auth.controller";
 			signOptions: { expiresIn: "15min" },
 		}),
 	],
-	providers: [AuthService],
+	providers: [AuthService, AuthRepository],
 	controllers: [AuthController],
 })
 export class AuthModule {}

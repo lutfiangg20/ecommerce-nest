@@ -1,4 +1,12 @@
 services:
+  app:
+    build: .
+    container_name: ecommerce-nest
+    ports:
+      - 3000:3000
+    depends_on:
+      - postgres
+
   postgres:
     image: postgres:15
     container_name: postgres_ecommerce-nest

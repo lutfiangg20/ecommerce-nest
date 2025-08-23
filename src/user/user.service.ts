@@ -19,6 +19,19 @@ export class UserService {
 			.from(usersTable);
 	}
 
+	async findUserById(id: number) {
+		const data = await this.db.db
+			.select()
+			.from(usersTable)
+			.where(eq(usersTable.id, id))
+			.limit(1);
+
+		if (!data[0]) {
+			throw new UnauthorizedException();
+		}
+		return data[0];
+	}
+
 	async findUserByEmail(email: string) {
 		const data = await this.db.db
 			.select()
