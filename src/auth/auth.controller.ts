@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
@@ -8,10 +9,15 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/sign-in.dto';
+import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import { UserService } from 'src/user/user.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+  ) {}
 
   @Post('login')
   async SignIn(
@@ -24,6 +30,16 @@ export class AuthController {
       userAgent,
     );
     return data;
+  }
+
+  @Post('register')
+  async Register(@Body() create: CreateUserDto) {
+    try {
+      await this.userService.createUser(create);
+      return 'Registration Successful';
+    } catch (error) {
+      throw new BadRequestException('user already exists');
+    }
   }
 
   @Get('refresh')
